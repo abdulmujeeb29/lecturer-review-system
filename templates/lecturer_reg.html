@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration </title>
+    <link href="{% static 'css/style.css' %} "  rel="stylesheet" >
+</head>
+<body>
+	<!-- Content goes here -->
+    <header>
+        <h1> Lecturer Registration Page</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required> <br>
+
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required> <br>
+
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required> <br>
+            
+            <label for=" 'department">Specialization</label>
+            <input type="text" id="department" name="department" required>  <br>
+
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required> <br>
+    
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password1" required>  <br>
+    
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="password" name="password2" required>  <br>
+    
+    
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select> <br>
+    
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+    
+</body>
+</html>
+
+
