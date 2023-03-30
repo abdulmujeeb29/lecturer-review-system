@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Profile</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<style>
+		body {
+			background-color: #f5f5f5;
+			font-family: 'Open Sans', sans-serif;
+		}
+		
+		.container {
+			width: 50%;
+			margin: 0 auto;
+			padding: 30px;
+			background-color: #fff;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+			border-radius: 5px;
+		}
+		
+		h1 {
+			font-size: 36px;
+			font-weight: bold;
+			color: #444;
+			text-align: center;
+			margin-top: 0;
+			margin-bottom: 30px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+		
+		.profile-details {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px;
+			margin-bottom: 30px;
+			border-radius: 5px;
+			background-color: #fff;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+		}
+		
+		.profile-details .detail {
+			flex-basis: calc(33.33% - 20px);
+			margin-bottom: 20px;
+			padding: 20px;
+			text-align: center;
+			border-radius: 5px;
+			background-color: #f5f5f5;
+			transition: background-color 0.3s ease;
+		}
+		
+		.profile-details .detail:hover {
+			background-color: #eee;
+		}
+		
+		.profile-details .detail i {
+			font-size: 24px;
+			color: #444;
+			margin-bottom: 10px;
+			display: block;
+		}
+		
+		.profile-details .detail span {
+			font-size: 16px;
+			font-weight: 600;
+			color: #444;
+			display: block;
+			margin-bottom: 5px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+		
+		.profile-details .detail p {
+			font-size: 14px;
+			color: #666;
+			margin: 0;
+		}
+        .review-form {
+            display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px;
+			margin-bottom: 30px;
+			border-radius: 5px;
+			background-color: #fff;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+		.review {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review p {
+             margin-bottom: 5px;
+  }      
+
+         .rating {
+    display: inline-block;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .rating strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+          
+	</style>
+</head>
+<body>
+    
+	<div class="container">
+		<h1>Welcome to {{ lecturer.first_name}}'s Profile </h1>
+		<div class="profile-details">
+            
+			<div class="detail">
+				<i class="fas fa-user"></i>
+				<span>first Name</span>
+				<p>{{lecturer.first_name}}</p>
+			</div>
+			<div class="detail">
+				<i class="fas fa-user"></i>
+				<span>Last Name</span>
+				<p>{{lecturer.last_name}}</p>
+			</div>
+			<div class="detail">
+				<i class="fas fa-phone"></i>
+				<span>Phone Number</span>
+				<p>{{lecturer.phone_number}}</p>
+			</div>
+            <div class="detail">
+				<i class="fas fa-envelope"></i>
+				<span>Email</span>
+				<p>{{lecturer.email}}</p>
+			</div>
+            <div class="detail">
+				<i class="fas fa-envelope"></i>
+				<span>Specialization</span>
+				<p>{{lecturers.specialization}}</p>
+			</div>
+            <div class="detail">
+				<i class="fas fa-envelope"></i>
+				<span>Gender</span>
+				<p>{{lecturer.gender}}</p>
+			</div>
+            
+		</div>
+          <div>
+			<h3>Average Rating : {{avg_rating}}</h3>
+			<h5>Total reviews : {{num_reviews}}</h5>
+
+		  </div>
+        
+        <div>
+        <h3>Reviews:</h3>
+        {% for review in reviews %}
+        <div class="review">
+			<p>{{review.content}}</p>
+			<h5>{{review.created_at}}</h5>
+            <!-- <p>created on {{review.created_at}}</p> -->
+            <div class="rating">
+
+			<p> <strong>Rating</strong> {{review.rating}}/5</p>
+
+			</div>
+        </div>
+        {% endfor %}
+    </div>
+    
+
+
+
+        <div class="form">
+            
+			<form  id="review-form"   method="post" >
+				{% csrf_token %}
+				<label for="content">Write a review:</label>
+				<textarea name="content" id="content" cols="30" rows="5"></textarea>
+				<label>Rating:</label>
+                <input type="radio" name="rating" value="1"><label>1</label>
+                <input type="radio" name="rating" value="2"><label>2</label>
+                <input type="radio" name="rating" value="3"><label>3</label>
+                <input type="radio" name="rating" value="4"><label>4</label>
+                <input type="radio" name="rating" value="5"><label>5</label>
+                <button type="submit">Submit Review</button>
+				
+			</form>
+            <div> <p id="success-message" class="hidden"></p></div>
+		</div>
+        <h3>
+            <a href="http://127.0.0.1:8000/list_lecturer"> previous page</a>
+        </h3>
+	</div>
+    <script>  
+        const form = document.querySelector('#review-form');
+        const successMessage = document.querySelector('#success-message');
+        
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // prevent the form from submitting normally
+        
+            // Send a POST request to the server with the form data
+            const formData = new FormData(form);
+            
+            fetch("/profile/{{lecturer.id}}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Set the success message and display it if the form was submitted successfully
+                    successMessage.textContent = 'Your review has been submitted successfully!';
+                    successMessage.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    // Handle any errors that occurred during the form submission
+                    throw new Error(`Error: ${response.status} ${response.statusText}`);
+                }
+            })
+            .catch(error => {
+                // Handle any network or server errors
+                console.error(error);
+                successMessage.textContent = 'An error occurred while submitting your form. Please try again later.';
+                successMessage.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

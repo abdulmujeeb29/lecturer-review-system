@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h2>Welcome</h2>
+        <nav>
+            <ul>
+                <li>Here is a list of all the lecturers</li>
+            </ul>
+        </nav>
+    </header>
+    <div>
+    <table>
+        <thead>
+            <tr>
+                <th>First Nmae</th>
+                <th>last Name</th>
+                <th>Show more details</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for lecturer in lecturers %}
+            <tr>
+            <div class="card">
+                
+                <td>{{ lecturer.first_name }}</td>
+                <td>{{ lecturer.last_name }}</td>
+                <td><button onclick="alert('First Name: {{ lecturer.first_name }}, Email: {{ lecturer.email }}, specialization: {{ lecturer.specialization }}, Phone number: {{ lecturer.phone_number }}')">Show More Details</button></td>
+                <td><a href="profile/{{lecturer.id}}">Go to Profile</a></td>
+            </div>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

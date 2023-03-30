@@ -128,4 +128,4 @@ STATICFILES_DIRS =(os.path.join(BASE_DIR,'static'),)
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# AUTH_USER_MODEL = 'users.Student'
+AUTH_USER_MODEL = 'lrs_app.CustomUser'

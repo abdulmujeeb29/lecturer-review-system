@@ -9,7 +9,7 @@
 <body>
 	<!-- Content goes here -->
     <header>
-        <h1> Student Registration Page</h1>
+        <h1>Registration Page</h1>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
@@ -22,7 +22,7 @@
     <h5>{{message}}</h5>
     {% endfor %}
     <main>
-        <form action="student_register"  method="POST" >
+        <form action="register"  method="POST" >
 
             {% csrf_token %}
 
@@ -47,6 +47,13 @@
     
             <label for="confirm-password">Confirm Password:</label>
             <input type="password" id="confirm-password" name="password2" required> <br>
+
+            <label for="user_type"> user_type</label>
+            <select id="user_type" name="user_type" required>
+                <option value='HOD'>HOD</option>
+                <option value='lecturer'>lecturer</option>
+                <option value='student'>student</option>
+            </select> <br>
     
     
             <label for="gender">Gender:</label>

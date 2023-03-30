@@ -1,31 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import UserManager, BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.core.exceptions import ValidationError
 
-# class MyUserManager(UserManager):
-#     pass
-
-
-# Create your models here.
-
-# class StudentManager(BaseUserManager):
-#     def create_user(self, email, password1, **extra_fields):
-#         if not email:
-#             raise ValueError('The Email field must be set')
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, **extra_fields)
-#         #user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-
-#     def create_superuser(self, email, password=None, **extra_fields):
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-#         return self.create_user(email, password, **extra_fields)
-
+class CustomUser(AbstractUser):
+    user_type_data = (('HOD','HOD') , ('lecturer', 'lecturer') , ('student', 'student'))
+    user_type = models.CharField(max_length=10, choices=user_type_data, default='HOD')
+    # gender_data =(('male','male') , ('female', 'female') ,('others', 'others') )
+    # gender = models.CharField(max_length=10, choices=gender_data , null=True)
+    
 class Admin(models.Model):
     name = models.CharField(max_length=5)
-    
-
+    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     def __str__(self) -> str:
         return self.name
 
@@ -51,13 +36,7 @@ class Student(models.Model):
     department = models.CharField(max_length=20)
     email = models.EmailField(null=True)
     level = models.CharField(max_length=5,choices=levels)
-
-    # objects= StudentManager()
-
-    #USERNAME_FIELD = 'email'
-    #REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'department']
-
-    
+    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     
     
 
@@ -66,6 +45,10 @@ class Student(models.Model):
         return self.username
 
 
+def max_length(value):
+    if len(value) > 11 :
+        return ValidationError('invalid Phonenumber ')
+
 
 class Lecturer(models.Model):
     username = models.CharField(max_length=20)
@@ -73,7 +56,10 @@ class Lecturer(models.Model):
     last_name= models.CharField(max_length=20)
     email = models.EmailField(null=True)
     specialization = models.CharField(max_length=20)
-    Gender = models.CharField(max_length=20,choices=Gender,default='male')
+    gender = models.CharField(max_length=20, null=True)
+    phone_number = models.IntegerField(validators=[max_length],null=True, blank=True)
+
+    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.username
@@ -91,7 +77,10 @@ Rating = (
 
 
 class Review(models.Model):
-    body = models.CharField(max_length=100, null= False, blank=False)
-    rating= models.CharField(max_length=5,choices=Rating, default=1)
-    lecturer_id = models.ForeignKey(Lecturer,on_delete=models.CASCADE)
+    content= models.CharField(max_length=100, null= False, blank=False)
+    rating= models.IntegerField()
+    lecturer = models.ForeignKey(Lecturer,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.body[:50]

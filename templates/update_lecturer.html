@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Update Profile </title>
+    <link rel="stylesheet" href="{% static 'css/style.css'  %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>Update your profile </li>
+                
+            </ul>
+            
+        </nav>
+
+    </header>
+    <main>
+        <form  id="my-form">
+
+            {% csrf_token %}
+            <label for="first_name">First name </label>
+            <input type="text" id="first_name" name="first_name" placeholder="input First Name" required><br>
+    
+            <label for="last_name">First name </label>
+            <input type="text" id="last_name" name="last_name" placeholder="Input last Name" required> <br>
+    
+            <label for="first_name">Email</label>
+            <input type="email" id="" name="email" placeholder="Input email" required > <br>
+    
+            <label for="specialization"> Specialization</label>
+            <input type="text" id="specialization" name="specialization" placeholder="course specialization" required> <br>
+    
+            <label for="gender"> Gender</label>
+            <input type="text" id="gender" name="gender" placeholder="input gender "><br>
+    
+            
+            <button type="submit">Submit</button>
+            
+        </form>
+        <p id="success-message" class="hidden"></p>
+
+    <h3><a href="lec_dash">return to previous page </a></h3>
+<script>
+const form = document.querySelector('#my-form');
+const successMessage = document.querySelector('#success-message');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent the form from submitting normally
+  
+  // Send a POST request to the server with the form data
+  const formData = new FormData(form);
+  fetch('/update_lecturer', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      // Set the success message and display it if the form was submitted successfully
+      successMessage.textContent = 'Your profile has been updated successfully!';
+      successMessage.classList.remove('hidden');
+      form.reset();
+    } else {
+      // Handle any errors that occurred during the form submission
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+  })
+  .catch(error => {
+    // Handle any network or server errors
+    console.error(error);
+    successMessage.textContent = 'An error occurred while submitting your form. Please try again later.';
+    successMessage.classList.remove('hidden');
+  });
+});
+
+</script>
+    </main>
+
+
+</body>
+</html>
