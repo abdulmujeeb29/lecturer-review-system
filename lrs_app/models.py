@@ -35,7 +35,8 @@ class Student(models.Model):
     last_name= models.CharField(max_length=20)
     department = models.CharField(max_length=20)
     email = models.EmailField(null=True)
-    level = models.CharField(max_length=5,choices=levels)
+    level = models.CharField(max_length=5)
+    gender =models.CharField(max_length=6, null=True)
     #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     
     

@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <!-- CSS Bootstrap -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-yvLoKqO3Jh2QObfoDkYahvsk/p0lX6l5UzTZ5Sy5+5U1ZJ0Bw98c8ZfWgHXv4uHJ79+30a1JrPygkgPYWeVtuw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        header {
+            background-color: #fff; /* Set the background color to white */
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Add a subtle box-shadow to the header */
+            padding: 20px 0; /* Add some padding to the top and bottom of the header */
+        }
+    
+        .navbar-brand {
+            font-size: 2rem; /* Increase the font size of the navbar brand */
+            font-weight: bold; /* Add some boldness to the navbar brand */
+        }
+    
+        .navbar-nav {
+            margin-right: 0; /* Remove the default right margin of the navbar-nav */
+        }
+    
+        .nav-item {
+            margin-right: 10px; /* Add a bit of space between the nav items */
+        }
+    
+        .nav-link {
+            font-size: 1.2rem; /* Increase the font size of the nav links */
+            color: #000; /* Set the color of the nav links to black */
+        }
+    
+        .nav-link:hover {
+            color: #007bff; /* Change the color of the nav links when hovered over */
+        }
+    
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 16 16" fill="%23000" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 2.75a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1-.75-.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1-.75-.75z"/></svg>'); /* Replace the navbar toggler icon with a custom icon */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">Welcome</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">List of all students</a>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div>
+        <form class="d-flex"  method="get" action="search_students" >
+            <input class="form-control me-2" type="text" placeholder="Search by name"   name="search-query">
+            <button class="btn btn-outline-success" type="submit" id="search-button">Search</button>
+        </form>
+    </div>
+    
+    {% for student in students %}
+    <!-- Modal -->
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                
+                
+                <div class="modal-body">
+                    <p><strong>First Name:</strong>{{ student.first_name }} <span id="firstName"></span></p>
+                    <p><strong>Email:</strong>  {{ student.email }}<span id="email"></span></p>
+                    <p><strong>Department:</strong> {{ student.department }} <span id="department"></span></p>
+                    <p><strong>Level:</strong> {{ student.level }} <span id="level "></span>
+
+                    <h5 class="modal-title" id="exampleModalLabel">Activate profile </h5>  
+                    <h5 class="modal-title" id="exampleModalLabel">Delete profile </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        
+
+                </div> 
+            </div>
+        </div>
+    </div> 
+    {% endfor %}

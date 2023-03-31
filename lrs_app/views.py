@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from . models import *
+from .models import *
 from django.contrib.auth.models import auth 
 from django.contrib import messages 
 from django.contrib.auth import authenticate,login 
@@ -124,9 +124,47 @@ def update_lecturer(request):
         return render(request,'update_lecturer.html')
 
 
+def update_student(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        department = request.POST['department']
+        gender = request.POST['gender']
+        level = request.POST['level']
+
+
+        student = Student(first_name=first_name, last_name=last_name, email=email,department=department)
+        student.gender=gender
+        student.level = level
+
+        student.save()
+
+        return HttpResponse('Details updated successfully ') 
+    
+    else:
+        return render(request,'update_student.html')
+
+
+
 def list_lecturer(request):
     lecturers = Lecturer.objects.all()
     return render(request,'list_lecturer.html', {'lecturers' : lecturers})
+
+
+def list_student(request):
+    students = Student.objects.all()
+    return render( request,'list_student.html', {'students' : students})
+
+from django.db.models import Q
+def search_students(request):
+    query = request.GET.get("search-query")
+    if query:
+        students = Student.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+    else:
+        students = Student.objects.none()
+    context = {'students': students, 'query': query}
+    return render(request, 'search_results.html', context)
 
 from django.db.models import Avg
 def detail_lecturer(request, pk):

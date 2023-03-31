@@ -10,7 +10,7 @@
     <header>
         <nav>
             <ul>
-                <li>Update your profile </li>
+                <li>Update your student profile </li>
                 
             </ul>
             
@@ -24,15 +24,19 @@
             <label for="first_name">First name </label>
             <input type="text" id="first_name" name="first_name" placeholder="input First Name" required><br>
     
-            <label for="last_name">last name </label>
+            <label for="last_name">Last name </label>
             <input type="text" id="last_name" name="last_name" placeholder="Input last Name" required> <br>
     
             <label for="first_name">Email</label>
             <input type="email" id="" name="email" placeholder="Input email" required > <br>
     
-            <label for="specialization"> Specialization</label>
-            <input type="text" id="specialization" name="specialization" placeholder="course specialization" required> <br>
-    
+            <label for="department"> Department</label>
+            <input type="text" id="department" name="department" placeholder="department" required> <br>
+            
+            <label for="gender"> Level</label>
+            <input type="text" id="level" name="level" placeholder="input level "><br>
+
+
             <label for="gender"> Gender</label>
             <input type="text" id="gender" name="gender" placeholder="input gender "><br>
     
@@ -42,7 +46,7 @@
         </form>
         <p id="success-message" class="hidden"></p>
 
-    <h3><a href="lec_dash">return to previous page </a></h3>
+    <h3><a href="stu_dash">return to previous page </a></h3>
 <script>
 const form = document.querySelector('#my-form');
 const successMessage = document.querySelector('#success-message');
@@ -52,7 +56,7 @@ form.addEventListener('submit', (event) => {
   
   // Send a POST request to the server with the form data
   const formData = new FormData(form);
-  fetch('/update_lecturer', {
+  fetch('/update_student', {
     method: 'POST',
     body: formData
   })
