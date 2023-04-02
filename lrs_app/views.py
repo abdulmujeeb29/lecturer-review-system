@@ -66,20 +66,24 @@ def login(request):
         user = authenticate( username=username, password=password1)
 
         if user is not None:
-            auth.login(request,user)
+            if user.is_active:
+                auth.login(request,user)
             
-            if user.user_type == 'HOD': 
-                return redirect('/hod_dash')
+                if user.user_type == 'HOD': 
+                    return redirect('/hod_dash')
             
-            elif user.user_type == 'lecturer' :
-                return redirect('/lec_dash')
+                elif user.user_type == 'lecturer' :
+                    return redirect('/lec_dash')
             
 
-            elif user.user_type == 'student':
-                return redirect('/stu_dash')
+                elif user.user_type == 'student':
+                    return redirect('/stu_dash')
             
             
-            return render(request, 'index.html')
+                return render(request, 'index.html')
+            else:
+                messages.info(request,'Your account has been deactivated')
+
         else:
             messages.info(request,'Invalid credentials ')
             return redirect('/login')
@@ -156,7 +160,18 @@ def list_student(request):
     students = Student.objects.all()
     return render( request,'list_student.html', {'students' : students})
 
+from django.urls import reverse 
+def detail_student(request, pk):
+    student = Student.objects.get(id=pk)
+    if request.method == 'POST':    
+        student.is_active = not student.is_active 
+        student.save()
+        return redirect('detail_student', pk=pk)
+    
+    return render(request,'detail_student.html', {'student' : student})
+
 from django.db.models import Q
+
 def search_students(request):
     query = request.GET.get("search-query")
     if query:
@@ -166,7 +181,10 @@ def search_students(request):
     context = {'students': students, 'query': query}
     return render(request, 'search_results.html', context)
 
+
+
 from django.db.models import Avg
+
 def detail_lecturer(request, pk):
     lecturer = Lecturer.objects.get(id=pk)
     reviews = Review.objects.filter(lecturer=lecturer).order_by('created_at')
@@ -188,4 +206,13 @@ def detail_lecturer(request, pk):
 
     return render(request,'detail_lecturer.html', {'lecturer' : lecturer , 'reviews': reviews , 'num_reviews' : num_reviews , 'avg_rating' : avg_rating }  )
 
+
+
+def delete_student(request,pk):
+    student=Student.objects.get(id=pk)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('detail_student', pk=pk)
+    
+    return render(request,'delete_student.html' ,{'student':student })
 

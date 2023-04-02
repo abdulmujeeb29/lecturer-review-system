@@ -86,8 +86,12 @@
                     <p><strong>Department:</strong> {{ student.department }} <span id="department"></span></p>
                     <p><strong>Level:</strong> {{ student.level }} <span id="level "></span>
 
-                    <h5 class="modal-title" id="exampleModalLabel">Activate profile </h5>  
-                    <h5 class="modal-title" id="exampleModalLabel">Delete profile </h5>
+                     
+                    <h5 class="modal-title" id="exampleModalLabel">Activaton</h5>
+                    <a href="detail/{{student.id}}"> Activation Profile </a>
+                    <h5 class="modal-title" id="exampleModalLabel">Deletion </h5>
+                    <a href="delete/{{student.id}}"> Delete Profile </a>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         
 

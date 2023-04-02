@@ -2,15 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.core.exceptions import ValidationError
 
+
 class CustomUser(AbstractUser):
     user_type_data = (('HOD','HOD') , ('lecturer', 'lecturer') , ('student', 'student'))
     user_type = models.CharField(max_length=10, choices=user_type_data, default='HOD')
+    is_active= models.BooleanField(default=True)
     # gender_data =(('male','male') , ('female', 'female') ,('others', 'others') )
     # gender = models.CharField(max_length=10, choices=gender_data , null=True)
     
 class Admin(models.Model):
     name = models.CharField(max_length=5)
-    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    email = models.EmailField(null=True )
     def __str__(self) -> str:
         return self.name
 
@@ -37,6 +39,8 @@ class Student(models.Model):
     email = models.EmailField(null=True)
     level = models.CharField(max_length=5)
     gender =models.CharField(max_length=6, null=True)
+    is_active= models.BooleanField(default=True)
+    
     #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     
     
