@@ -1,14 +1,17 @@
+import uuid
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.core.exceptions import ValidationError
 
 
 class CustomUser(AbstractUser):
-    user_type_data = (('HOD','HOD') , ('lecturer', 'lecturer') , ('student', 'student'))
-    user_type = models.CharField(max_length=10, choices=user_type_data, default='HOD')
+    user_type_data = (('admin','admin') , ('lecturer', 'lecturer') , ('student', 'student'))
+    user_type = models.CharField(max_length=10, choices=user_type_data, default='admin')
     is_active= models.BooleanField(default=True)
-    # gender_data =(('male','male') , ('female', 'female') ,('others', 'others') )
-    # gender = models.CharField(max_length=10, choices=gender_data , null=True)
+    gender_data = (('male','male') , ('female', 'female') , ('other', 'other'))
+    gender = models.CharField(max_length=10, choices=gender_data)
+
     
 class Admin(models.Model):
     name = models.CharField(max_length=5)
@@ -32,19 +35,15 @@ Gender = (
 )
 
 class Student(models.Model):
-    username = models.CharField(max_length=20)
-    first_name= models.CharField(max_length=20)
-    last_name= models.CharField(max_length=20)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     department = models.CharField(max_length=20)
-    email = models.EmailField(null=True)
     level = models.CharField(max_length=5)
-    gender =models.CharField(max_length=6, null=True)
+    matricno = models.CharField(max_length=10,null=True)
     is_active= models.BooleanField(default=True)
     
     #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     
-    
-
 
     def __str__(self) -> str:
         return self.username
@@ -56,16 +55,12 @@ def max_length(value):
 
 
 class Lecturer(models.Model):
-    username = models.CharField(max_length=20)
-    first_name= models.CharField(max_length=20)
-    last_name= models.CharField(max_length=20)
-    email = models.EmailField(null=True)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     specialization = models.CharField(max_length=20)
-    gender = models.CharField(max_length=20, null=True)
-    phone_number = models.IntegerField(validators=[max_length],null=True, blank=True)
+    phone_number = models.CharField(max_length=11, null=True)
 
-    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-
+   
     def __str__(self) -> str:
         return self.username
 
@@ -82,10 +77,14 @@ Rating = (
 
 
 class Review(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     content= models.CharField(max_length=100, null= False, blank=False)
     rating= models.IntegerField()
+    # student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE, null=False, default=None)
     lecturer = models.ForeignKey(Lecturer,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.body[:50]
+   

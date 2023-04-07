@@ -1,1 +1,130 @@
-<h1>hello</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Landing Page</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .navbar {
+      border-radius: 0;
+    }
+    .jumbotron {
+      background-color: #f8f9fa;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .jumbotron h1,
+    .jumbotron p {
+      color: #343a40;
+    }
+    .jumbotron hr {
+      border-top: 2px solid #343a40;
+    }
+    .btn-primary {
+      background-color: #343a40;
+      border-color: #343a40;
+    }
+    .btn-primary:hover {
+      background-color: #212529;
+      border-color: #212529;
+    }
+    footer {
+      background-color: #343a40;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">My Brand</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login">Login</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-5">
+    <div class="jumbotron">
+      <h1 class="display-4">Lecturer Review System</h1>
+      <p class="lead">Our system is designed to make it easy for students to provide valuable feedback on their lecturers. By gathering information on what's working and what isn't, we hope to create a better learning experience for everyone involved. Whether you're a student or a lecturer, we believe that our system can help facilitate positive change in the classroom.</p>
+      <hr class="my-4">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat dolor eu turpis luctus, vel fermentum neque volutpat. Morbi ac nibh nec lorem fringilla commodo eu sit amet mi.</p>
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </div>
+  </div>
+   
+
+  <div class="container mt-5">
+    <div class="row">
+      <!-- About Section -->
+      <section id="about">
+      <div class="col-md-6" id>
+        <h2>About Us</h2>
+        <p>We are a team of developers who have created the Lecturer Review System to make it easy for students to provide feedback on their lecturers. Our goal is to improve the learning experience for everyone by gathering valuable information and facilitating positive change in the classroom.</p>
+        <p>Why Provide Feedback?
+          Feedback is essential to improving any system, and the education system is no exception. By providing feedback on your lecturers, you can help them understand what they're doing well and what areas they could improve upon. This benefits not only the lecturers themselves, but also future students who will learn from them..</p>
+      </div>
+      </section>
+      
+      <!-- Contact Section -->
+      
+      <div class="col-md-6">
+        <h2>Contact Us</h2>
+        <form>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message" rows="5"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      </section>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-light text-center py-3">
+    <p>Copyright &copy; 2023
+    </p>
+  </footer>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3."

@@ -1,28 +1,154 @@
- {% load static %}
- <!DOCTYPE html>
- <html>
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            Student Dashboard
-        </title>
-       
-       <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    </head>
-    <body>
-     <h1>student Dashboard</h1>
-        
-        <header>
-            <h1>Welcome</h1>
-            <nav>
-                <ul>
-                    <li> <a href="#"> Make A Review</a</li>
-                    <li><a href="update_student"> Update Pofile </a></li>
-                    <li> <a href="list_lecturer"> List of lecturers</a></li>
-                </ul>
-            </nav>
-        </header>
-    </body>
- </html>
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            background-color: #F5F5F5;
+			
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #FFFFFF;
+        }
+        /* .card-body { */
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .card-body p {
+            margin-bottom: 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .card-body .text-muted {
+            font-size: 14px;
+        }
+        .btn-primary, .btn-danger {
+            font-size: 14px;
+            padding: 6px 12px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Student Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#reviews">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/update/student">Update Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/list/lecturer">List of Lecturers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+	<div class="container">
+		<h1>Welcome {{user.username}}</h1>
+		<!-- Other content goes here -->
+	</div>
+    
+    <div class="container mt-4">
+		<div class="row">
+			<div class="col-sm-12">
+				{% for message in messages %}
+                <p> {{message}}</p>
+                 {% endfor %}
+
+				<h3 id="reviews">Reviews</h3>
+				<div class="card">
+					{% for review in reviews %}
+					<div class="card-body">
+						<p> {{ review.content }}.</p>
+						<p class="text-muted">{{review.created_at}}</p>
+						<p class="text-muted">Rating: {{ review.rating }} /5</p>
+
+						<p> {{review.lecturer.first_name}} {{review.lecturer.last_name}}</p>
+						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal{{ review.id }}">Delete</button>
+						<button class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#updateModal{{ review.id }}">Edit</button>
+					</div>
+	
+					<!-- Delete Modal -->
+					<div class="modal fade" id="deleteModal{{ review.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ review.id }}" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="deleteModalLabel{{ review.id }}">Delete Review</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure you want to delete this review?</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									<form method="post" action="{% url 'delete_review' review.pk %}">
+										{% csrf_token %}
+										<button type="submit" class="btn btn-danger">Delete</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Update Modal -->
+					<div class="modal fade" id="updateModal{{ review.id }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{ review.id }}" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="updateModalLabel{{ review.id }}">Update Review</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form method="post" action=" {% url 'update_review' review.pk %}">
+										{% csrf_token %}
+										<div class="form-group">
+											<label for="content">Content:</label>
+											<textarea class="form-control" rows="3" id="content" name="content">{{ review.content }}</textarea>
+										</div>
+										<div class="form-group">
+											<label for="rating">Rating:</label>
+											<input type="number" class="form-control" id="rating" name="rating" min="1" max="5" value="{{ review.rating }}" required>
+										</div>
+										<input type="hidden" name="lecturer_id" value="{{ review.lecturer.id }}">
+										<button type="submit" class="btn btn-primary">Update</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					{% endfor %}
+				</div>
+	
+			</div>
+		</div>
+	</div>
+	

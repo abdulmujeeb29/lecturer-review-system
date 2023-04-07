@@ -1,49 +1,86 @@
-<!-- {% load static %}
 <!DOCTYPE html>
-<html>
-   <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>
-           Lecturer Dashboard
-       </title>
-      
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
-   </head>
-   <body>
-   <h5>lecturer Dashboard</h5>
-
-   welcome {{user.username}}
-       
-       <header>
-           <h1>Welcome</h1>
-           <nav>
-               <ul>
-                   <li> <a href="#"> List Reviews</a</li>
-                   <li><a href="update_lecturer"> Update Pofile </a></li>
-                   
-               </ul>
-           </nav>
-       </header>
-   </body>
-</html> -->
-
-
-
-{% load static %}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lecturer Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Document</title>
     <style>
-        /* Custom CSS styles */
+        body {
+			background-color: #f5f5f5;
+			font-family: 'Open Sans', sans-serif;
+		}
+		
+		.container {
+			width: 50%;
+			margin: 0 auto;
+			padding: 30px;
+			background-color: #fff;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+			border-radius: 5px;
+		}
+		
+		h1 {
+			font-size: 36px;
+			font-weight: bold;
+			color: #444;
+			text-align: center;
+			margin-top: 0;
+			margin-bottom: 30px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+		
+		.profile-details {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px;
+			margin-bottom: 30px;
+			border-radius: 5px;
+			background-color: #fff;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+		}
+		
+		.profile-details .detail {
+			flex-basis: calc(33.33% - 20px);
+			margin-bottom: 20px;
+			padding: 20px;
+			text-align: center;
+			border-radius: 5px;
+			background-color: #f5f5f5;
+			transition: background-color 0.3s ease;
+		}
+		
+		.profile-details .detail:hover {
+			background-color: #eee;
+		}
+		
+		.profile-details .detail i {
+			font-size: 24px;
+			color: #444;
+			margin-bottom: 10px;
+			display: block;
+		}
+		
+		.profile-details .detail span {
+			font-size: 16px;
+			font-weight: 600;
+			color: #444;
+			display: block;
+			margin-bottom: 5px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+		
+		.profile-details .detail p {
+			font-size: 14px;
+			color: #666;
+			margin: 0;
+		}
         body {
             background-color: #F5F5F5;
-			
         }
         .card {
             border: none;
@@ -52,7 +89,7 @@
             margin-bottom: 20px;
             background-color: #FFFFFF;
         }
-        /* .card-body { */
+        .card-body {
             padding: 0;
             margin-bottom: 20px;
         }
@@ -72,34 +109,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">lecturer Dashboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#reviews">Reviews</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/update/lecturer">Update Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Logout</a>
-                </li>
-            </ul>
+    <div class="container">
+        <h1>Welcome to {{ lecturer.first_name}}'s Profile </h1>
+        <div class="profile-details">
+            
+            <div class="detail">
+                <i class="fas fa-user"></i>
+                <span>first Name</span>
+                <p>{{lecturer.first_name}}</p>
+            </div>
+            <div class="detail">
+                <i class="fas fa-user"></i>
+                <span>Last Name</span>
+                <p>{{lecturer.last_name}}</p>
+            </div>
+            <div class="detail">
+                <i class="fas fa-phone"></i>
+                <span>Phone Number</span>
+                <p>{{lecturer.phone_number}}</p>
+            </div>
         </div>
-    </nav>
+    </div>
 
-	<div class="container">
-		<h1>Welcome {{user.username}}</h1>
-		<!-- Other content goes here -->
-	</div>
-    
     <div class="container mt-4">
 		<div class="row">
 			<div class="col-sm-12">
@@ -135,7 +169,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-									<form method="post" action="{% url 'delete_review' review.pk %}">
+									<form method="post" action="">
 										{% csrf_token %}
 										<button type="submit" class="btn btn-danger">Delete</button>
 									</form>
@@ -155,7 +189,7 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<form method="post" action=" {% url 'update_review' review.pk %}">
+									<form method="post" action="">
 										{% csrf_token %}
 										<div class="form-group">
 											<label for="content">Content:</label>
@@ -180,3 +214,5 @@
 		</div>
 	</div>
 	
+</body>
+</html>
