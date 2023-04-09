@@ -173,13 +173,13 @@ def delete_review(request, pk):
     return render(request, 'delete_review.html', {'review': review})
 
 
-def lecturer_dashboard(request,lecturer_id):
-    lecturer = get_object_or_404(Lecturer, id=lecturer_id)
-    
-    reviews = Review.objects.filter(lecturer=lecturer)
+def lecturer_dashboard(request):
+    # lecturer = get_object_or_404(Lecturer, id=lecturer_id)
+
+    # reviews = Review.objects.filter(lecturer=lecturer)
 
 
-    return render(request,'lecturer_dashboard.html',{'reviews' : reviews, 'lecturer' :lecturer })
+    return render(request,'lecturer_dashboard.html')
 
 def admin_dashboard(request):
     return render(request,'admin_dashboard.html')
@@ -315,14 +315,15 @@ def detail_lecturer(request, pk):
 
     num_reviews = reviews.count()
     avg_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating']
-    avg_rating =  round(avg_rating, 2)
+    #avg_rating =  round(avg_rating, 2)
 
     
     if request.method =='POST':
         content= request.POST['content']
         rating = request.POST['rating']
+        student = request.user.student
         
-        review = Review.objects.create( lecturer=lecturer ,content=content , rating =rating )
+        review = Review.objects.create( lecturer=lecturer ,content=content , rating =rating , student= student )
         review.save()
 
 

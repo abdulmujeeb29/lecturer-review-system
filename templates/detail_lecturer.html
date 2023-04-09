@@ -175,12 +175,64 @@
         {% endfor %}
     </div>
     
+	<div class="form">
+		<form id="review-form" data-lecturer-id="{{ lecturer.id }}" method="post">
+			{% csrf_token %}
+			<label for="content">Write a review:</label>
+			<textarea name="content" id="content" cols="30" rows="5"></textarea>
+			<label>Rating:</label>
+			<input type="radio" name="rating" value="1"><label>1</label>
+            <input type="radio" name="rating" value="2"><label>2</label>
+            <input type="radio" name="rating" value="3"><label>3</label>
+            <input type="radio" name="rating" value="4"><label>4</label>
+            <input type="radio" name="rating" value="5"><label>5</label>
+			
+			<button type="submit">Submit Review</button>
+		</form>
+		<p id="success-message" class="hidden"></p>
+	</div>
+	<h3>
+		<a href="/list/lecturer">Previous Page</a>
+	</h3>
+	
+	<script>
+		const form = document.querySelector('#review-form');
+		const successMessage = document.querySelector('#success-message');
+	
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+	
+			const formData = new FormData(form);
+			const lecturerId = form.dataset.lecturerId;
+	
+			try {
+				const response = await fetch(`/profile/${lecturerId}`, {
+					method: 'POST',
+					body: formData
+				});
+	
+				if (!response.ok) {
+					throw new Error(`Error: ${response.status} ${response.statusText}`);
+				}
+	
+				successMessage.textContent = 'Your review has been submitted successfully!';
+				successMessage.classList.remove('hidden');
+				form.reset();
+			} catch (error) {
+				console.error(error);
+				successMessage.textContent = 'An error occurred while submitting your form. Please try again later.';
+				successMessage.classList.remove('hidden');
+			}
+		});
+	</script>
+	</div>
+	</body>
+	</html>
 
 
-
-        <div class="form">
+        <!-- <div class="form">
             
-			<form  id="review-form"   method="post" >
+			<form  id="review-form" data-lecturer-id="{{ lecturer.id }}"  method="post" >
 				{% csrf_token %}
 				<label for="content">Write a review:</label>
 				<textarea name="content" id="content" cols="30" rows="5"></textarea>
@@ -190,7 +242,7 @@
                 <input type="radio" name="rating" value="3"><label>3</label>
                 <input type="radio" name="rating" value="4"><label>4</label>
                 <input type="radio" name="rating" value="5"><label>5</label>
-                <button type="submit">Submit Review</button>
+                <button type="submit" >Submit Review</button>
 				
 			</form>
             <div> <p id="success-message" class="hidden"></p></div>
@@ -208,8 +260,11 @@
         
             // Send a POST request to the server with the form data
             const formData = new FormData(form);
+			const lecturerId = form.querySelector('[data-lecturer-id]').getAttribute('data-lecturer-id');
+
+
             
-            fetch("/profile/{{lecturer.id}}", {
+            fetch('/profile/${lecturerId}' , {
                 method: 'POST',
                 body: formData
             })
@@ -233,4 +288,4 @@
         });
     </script>
 </body>
-</html>
+</html> -->

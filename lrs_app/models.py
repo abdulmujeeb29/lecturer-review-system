@@ -80,8 +80,8 @@ class Review(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     content= models.CharField(max_length=100, null= False, blank=False)
     rating= models.IntegerField()
-    # student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True)
-    student = models.ForeignKey(Student,on_delete=models.CASCADE, null=False, default=None)
+    #student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True)
+    # student = models.ForeignKey(Student,on_delete=models.CASCADE, null=False, default=None)
     lecturer = models.ForeignKey(Lecturer,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
