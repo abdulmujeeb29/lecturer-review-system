@@ -1,102 +1,181 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students</title>
-    <!-- CSS Bootstrap -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-yvLoKqO3Jh2QObfoDkYahvsk/p0lX6l5UzTZ5Sy5+5U1ZJ0Bw98c8ZfWgHXv4uHJ79+30a1JrPygkgPYWeVtuw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<title>Students</title>
+	<style>
+		/* Style for table */
+		table {
+			width: 100%;
+			margin-bottom: 1rem;
+			background-color: #fff;
+			border: 1px solid #dee2e6;
+			border-collapse: collapse;
+		}
 
-    <style>
-        header {
-            background-color: #fff; /* Set the background color to white */
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Add a subtle box-shadow to the header */
-            padding: 20px 0; /* Add some padding to the top and bottom of the header */
-        }
-    
-        .navbar-brand {
-            font-size: 2rem; /* Increase the font size of the navbar brand */
-            font-weight: bold; /* Add some boldness to the navbar brand */
-        }
-    
-        .navbar-nav {
-            margin-right: 0; /* Remove the default right margin of the navbar-nav */
-        }
-    
-        .nav-item {
-            margin-right: 10px; /* Add a bit of space between the nav items */
-        }
-    
-        .nav-link {
-            font-size: 1.2rem; /* Increase the font size of the nav links */
-            color: #000; /* Set the color of the nav links to black */
-        }
-    
-        .nav-link:hover {
-            color: #007bff; /* Change the color of the nav links when hovered over */
-        }
-    
-        .navbar-toggler-icon {
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 16 16" fill="%23000" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 2.75a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1-.75-.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1-.75-.75z"/></svg>'); /* Replace the navbar toggler icon with a custom icon */
-        }
-    </style>
+		th,
+		td {
+			padding: 0.75rem;
+			vertical-align: top;
+			border-top: 1px solid #dee2e6;
+		}
+
+		thead th {
+			vertical-align: bottom;
+			border-bottom: 2px solid #dee2e6;
+		}
+
+		tbody + tbody {
+			border-top: 2px solid #dee2e6;
+		}
+
+		/* Style for buttons */
+		.btn {
+			padding: 0.5rem 1rem;
+			font-size: 0.875rem;
+			line-height: 1.5;
+			border-radius: 0.25rem;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+			transition: all 0.2s ease-in-out;
+		}
+
+		.btn-primary {
+			background-color: #007bff;
+			border-color: #007bff;
+		}
+
+		.btn-primary:hover {
+			background-color: #0069d9;
+			border-color: #0062cc;
+		}
+
+		.btn-primary:focus,
+		.btn-primary.focus {
+			box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+		}
+
+		.btn-danger {
+			background-color: #dc3545;
+			border-color: #dc3545;
+		}
+
+		.btn-danger:hover {
+			background-color: #c82333;
+			border-color: #bd2130;
+		}
+
+		.btn-danger:focus,
+		.btn-danger.focus {
+			box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+		}
+	</style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">Welcome</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">List of all students</a>
-                            
-                        </li>
-                    </ul>
+    
+	<div class="container mt-3">
+        <div> <p>
+            <a href="/admin_dashboard">Previous Page</a>
+        </p></div>
+		<h2>Students</h2>
+		<p>Here is a list of all the students:</p>
+        <div class="form-group">
+            <input type="text" class="form-control" id="search-input" placeholder="Search...">
+        </div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th> Matric No</th>
+					<th>Name</th>
+					<th>Email</th>
+                    <th>department</th>
+                    <th>level</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+                {% for student in students %}
+				<tr>
+					<td>{{student.matricno}}</td>
+					<td>{{student.user.first_name}}</td>
+					<td>{{student.user.email}}</td>
+                    <td>{{student.department}}</td>
+                    <td>{{student.level}}</td>
+					<td>
+						<button class="btn btn-primary btn-sm mr-1"data-toggle="modal" data-target="#activateModal{{ student.id }}">{% if student.is_active %} deActivate {% else %} Activate {% endif %} </button>
+						<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ student.id }}">Delete</button>
+					</td>
+                
+				</tr>
+			    <!-- Delete Modal -->
+                <div class="modal fade" id="deleteModal{{student.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{student.id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel{{student.id }}">Delete Student</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this Student?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <form method="post" action="{% url 'delete_student' pk=student.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <!-- Activate modal  -->
+
+               <div class="modal fade" id="activateModal{{ student.id }}" tabindex="-1" role="dialog" aria-labelledby="#activateModal{{ student.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id= "activateModal{{ student.id }}">Activate/ Deactivate Student</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to {% if student.is_active %} DeActivate {% else %} Activate this Student? {% endif %}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form method="post" action=" {% url 'activate_student' student.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">{% if student.is_active %}DeActivate  {% else %} Activate this Student? {% endif %}</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    
-    <div>
-        <form class="d-flex"  method="get" action="search_students" >
-            <input class="form-control me-2" type="text" placeholder="Search by name"   name="search-query">
-            <button class="btn btn-outline-success" type="submit" id="search-button">Search</button>
-        </form>
-    </div>
-    
-    {% for student in students %}
-    <!-- Modal -->
-    
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                
-                
-                
-                <div class="modal-body">
-                    <p><strong>First Name:</strong>{{ student.first_name }} <span id="firstName"></span></p>
-                    <p><strong>Email:</strong>  {{ student.email }}<span id="email"></span></p>
-                    <p><strong>Department:</strong> {{ student.department }} <span id="department"></span></p>
-                    <p><strong>Level:</strong> {{ student.level }} <span id="level "></span>
 
-                     
-                    <h5 class="modal-title" id="exampleModalLabel">Activaton</h5>
-                    <a href="detail/{{student.id}}"> Activation Profile </a>
-                    <h5 class="modal-title" id="exampleModalLabel">Deletion </h5>
-                    <a href="delete/{{student.id}}"> Delete Profile </a>
+       
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        
-
-                </div> 
-            </div>
-        </div>
-    </div> 
-    {% endfor %}
+                {% endfor %}
+                    </tbody>
+                    </table>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script>
+                        $(document).ready(function(){
+                            $("#search-input").on("keyup", function() {
+                                var value = $(this).val().toLowerCase();
+                                $("tbody tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
+                            });
+                        });
+                    </script>
+                    </body>
+                    </html>

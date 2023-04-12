@@ -81,16 +81,18 @@
 
 				<h3 id="reviews">Reviews</h3>
 				<div class="card">
+					{% if reviews %}
 					{% for review in reviews %}
 					<div class="card-body">
 						<p> {{ review.content }}.</p>
 						<p class="text-muted">{{review.created_at}}</p>
 						<p class="text-muted">Rating: {{ review.rating }} /5</p>
 
-						<p> {{review.lecturer.first_name}} {{review.lecturer.last_name}}</p>
+						<p> lecturer :<strong> {{review.lecturer.user.first_name}}  {{review.lecturer.user.last_name}}  </strong></p>
 						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal{{ review.id }}">Delete</button>
 						<button class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#updateModal{{ review.id }}">Edit</button>
 					</div>
+					
 	
 					<!-- Delete Modal -->
 					<div class="modal fade" id="deleteModal{{ review.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ review.id }}" aria-hidden="true">
@@ -146,6 +148,9 @@
 					</div>
 	
 					{% endfor %}
+					{% else %}
+					<p>You haven't made any reviews yet</p>
+					{% endif %}
 				</div>
 	
 			</div>

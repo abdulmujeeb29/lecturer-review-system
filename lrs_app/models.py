@@ -14,8 +14,10 @@ class CustomUser(AbstractUser):
 
     
 class Admin(models.Model):
-    name = models.CharField(max_length=5)
-    email = models.EmailField(null=True )
+    department = models.CharField(max_length=20, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    is_active= models.BooleanField(default=True)
+
     def __str__(self) -> str:
         return self.name
 
@@ -36,13 +38,14 @@ Gender = (
 
 class Student(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)           
+    #The OneToOneField creates a unique relationship between the two models, where a Student object can only have one associated CustomUser
     department = models.CharField(max_length=20)
     level = models.CharField(max_length=5)
     matricno = models.CharField(max_length=10,null=True)
     is_active= models.BooleanField(default=True)
     
-    #admin_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+  
     
 
     def __str__(self) -> str:
@@ -56,9 +59,11 @@ def max_length(value):
 
 class Lecturer(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    #The OneToOneField creates a unique relationship between the two models, where a Student object can only have one associated CustomUser
     specialization = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=11, null=True)
+    is_active= models.BooleanField(default=True)
 
    
     def __str__(self) -> str:
@@ -80,10 +85,10 @@ class Review(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     content= models.CharField(max_length=100, null= False, blank=False)
     rating= models.IntegerField()
-    #student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True)
-    # student = models.ForeignKey(Student,on_delete=models.CASCADE, null=False, default=None)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
     lecturer = models.ForeignKey(Lecturer,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self) -> str:
         return self.body[:50]

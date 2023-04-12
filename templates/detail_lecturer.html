@@ -118,7 +118,7 @@
 <body>
     
 	<div class="container">
-		<h1>Welcome to {{ lecturer.first_name}}'s Profile </h1>
+		<h1>Welcome to {{ lecturer.user.first_name}}'s Profile </h1>
 		<div class="profile-details">
             
 			<div class="detail">
@@ -161,6 +161,7 @@
         
         <div>
         <h3>Reviews:</h3>
+		{% if reviews %}
         {% for review in reviews %}
         <div class="review">
 			<p>{{review.content}}</p>
@@ -172,12 +173,16 @@
 
 			</div>
         </div>
-        {% endfor %}
+		{% endfor %}
+		{% else %}
+		<p>No reviews yet </p>
+		{% endif %}
     </div>
     
 	<div class="form">
 		<form id="review-form" data-lecturer-id="{{ lecturer.id }}" method="post">
 			{% csrf_token %}
+
 			<label for="content">Write a review:</label>
 			<textarea name="content" id="content" cols="30" rows="5"></textarea>
 			<label>Rating:</label>
