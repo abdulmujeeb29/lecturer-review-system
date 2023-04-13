@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-c4lqwl4sp7f^=n_)d^(e$r#ln&q^3$r33g*77o=4vl1k095gc4
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://web-production-3454.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-0c99.up.railway.app']
 
 
 
@@ -77,17 +77,22 @@ WSGI_APPLICATION = 'lrs_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lrs_db',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': 'abdulmujeeb',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'lrs_db',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#         'USER': 'root',
+#         'PASSWORD': 'abdulmujeeb',
+#     }
+# }
 
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 
 
 
