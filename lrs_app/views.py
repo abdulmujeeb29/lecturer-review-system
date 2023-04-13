@@ -8,7 +8,10 @@ from django.contrib.auth import authenticate,login ,logout
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 # Create your views here.
+
+
 
 def register(request):
     
@@ -195,11 +198,6 @@ def login(request):
         else:
             messages.info(request,'Invalid credentials ')
             return redirect('/login')
-    
-    
-
-
-
 
     return render(request, 'login.html')
 
