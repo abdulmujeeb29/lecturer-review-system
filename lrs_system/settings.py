@@ -88,10 +88,11 @@ WSGI_APPLICATION = 'lrs_system.wsgi.application'
 #     }
 # }
 
+import os
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(default='mysql://root:abdulmujeeb@127.0.0.1:3306/lrs_db')
 }
 
 
