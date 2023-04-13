@@ -263,7 +263,7 @@ def admin_dashboard(request):
 
     current_site = request.get_host()
 
-    link = 'http://' + current_site + reverse('admin_register')
+    link = 'https://' + current_site + reverse('admin_register')
 
     return render(request,'admin_dashboard.html', {'num_reviews' : num_reviews , 'num_students' : num_students , 'num_lecturers' : num_lecturers , 'link' : link})
 
