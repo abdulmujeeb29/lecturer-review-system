@@ -80,19 +80,12 @@ WSGI_APPLICATION = 'lrs_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lrs_db',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': 'railway',
+        'HOST': 'containers-us-west-203.railway.app',
+        'PORT': '5662',
         'USER': 'root',
-        'PASSWORD': 'abdulmujeeb',
+        'PASSWORD': '0xclbZ7IWUO67JgSmNOT',
     }
-}
-
-import os
-import dj_database_url
-
-DATABASES = {
-    'default': dj_database_url.config(default='mysql://root:abdulmujeeb@127.0.0.1:3306/lrs_db')
 }
 
 
