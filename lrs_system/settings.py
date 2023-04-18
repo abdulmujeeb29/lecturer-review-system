@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config('NAME'),
-        'HOST': 'containers-us-west-203.railway.app',
+        'HOST': config('HOST'),
         'PORT': '5662',
         'USER': config('USER'),
         'PASSWORD': config("PASSWORD"),
