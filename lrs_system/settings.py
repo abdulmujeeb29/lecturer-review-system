@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-c4lqwl4sp7f^=n_)d^(e$r#ln&q^3$r33g*77o=4vl1k095gc4
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://lecturer-review-system-production-8af6.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://lecturer-review-system-production.up.railway.app']
 
 
 
@@ -82,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
-        'HOST': 'containers-us-west-209.railway.app',
-        'PORT': '6954',
+        'HOST': 'containers-us-west-101.railway.app',
+        'PORT': '5486',
         'USER': 'root',
-        'PASSWORD': '6gNuEwUXXNQcIkBRaFzm',
+        'PASSWORD': 'A75BcCj6uLA3x2MShw3k',
     }
 }
 
