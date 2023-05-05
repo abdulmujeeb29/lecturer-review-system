@@ -41,7 +41,7 @@ The Lecturer Review System provides three user roles with the following function
 
 + Student: Can submit reviews for their lecturers,view their previous reviews and also update their profiles for easy accessibility.
 + Lecturer: Can view their reviews, their overall rating and alsio update their profile.
-+ Admin: Can view all reviews,manage users(both students and lecturers), activate/deactivate their acounts therby restriting their access to login and also deleting their profile entirely
++ Admin: Can view all reviews, manage users(both students and lecturers), activate/deactivate their accounts thereby restricting their access to login and also deleting their profile entirely
 
 # Technologies used
 The Lecturer Review System is built using the following technologies:
