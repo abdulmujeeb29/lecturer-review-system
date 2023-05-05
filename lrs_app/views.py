@@ -223,7 +223,7 @@ def student_dashboard(request):
 
 @login_required
 def update_review(request, pk):
-    review = get_object_or_404(Review, pk=pk)
+    review = get_object_or_404(Review, pk=pk)      # accessing a review whose pk is a uuid , esy way using the get_obect_or_404
 
 
     if request.method == 'POST':
@@ -235,8 +235,8 @@ def update_review(request, pk):
     return render(request, 'update_review.html', {'review': review})
 
 @login_required
-def delete_review(request, pk):
-    review = get_object_or_404(Review, pk=pk)
+def delete_review(request, pk):                    
+    review = get_object_or_404(Review, pk=pk)      
 
 
     if request.method == 'POST':
@@ -305,6 +305,8 @@ def update_admin(request):
         }
 
         return render (request,'update_admin.html' , context)
+    
+
 def update_lecturer(request):
     user = User.objects.get(id=request.user.id)
     try:
@@ -429,8 +431,8 @@ def detail_lecturer(request, pk):
 
     num_reviews = reviews.count()
     avg_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating']
-    # avg_rating =  round(avg_rating, 2)
-    student = Student.objects.get(user=request.user)
+    # avg_rating =  round(avg_rating, 2)                               
+    student = Student.objects.get(user=request.user)            
         
     
     if request.method =='POST':
@@ -465,6 +467,7 @@ def delete_lecturer(request,pk):
     return render(request,'delete_lecturer.html', {'lecturer' : lecturer})
 
 from django.urls import reverse 
+
 def activate_student(request, pk):
     student = get_object_or_404(Student,pk=pk)
     if request.method == 'POST':
