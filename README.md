@@ -1,5 +1,6 @@
 
-Lecturer Review System
+#Lecturer Review System.
+
 The Lecturer Review System is a web-based application that allows students to provide anonymous feedback on their lecturers. The system provides three user roles: students, admins, and lecturers.
 
 Installation
