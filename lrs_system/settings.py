@@ -82,12 +82,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
-        'HOST': 'containers-us-west-101.railway.app',
-        'PORT': '5486',
+        'HOST': 'containers-us-west-77.railway.app',
+        'PORT': '6616',
         'USER': 'root',
-        'PASSWORD': 'A75BcCj6uLA3x2MShw3k',
+        'PASSWORD': 'z4vd6Tm12thXCRrV0g3I',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 
 
